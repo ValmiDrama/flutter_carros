@@ -21,18 +21,18 @@ class _CarroDetailhesPageState extends State<CarroDetailhesPage> {
 
   Carro get carro => widget.carro;
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  //   _loripsumApiBloc.fetch();
+    // _loripsumApiBloc.fetch();
 
-  //   FavoritoService().isFavorito(carro).then((bool favorito) {
-  //     setState(() {
-  //       color = favorito ? Colors.red : Colors.grey;
-  //     });
-  //   });
-  // }
+    // FavoritoService().isFavorito(carro).then((bool favorito) {
+    //   setState(() {
+    //     color = favorito ? Colors.red : Colors.grey;
+    //   });
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +81,7 @@ class _CarroDetailhesPageState extends State<CarroDetailhesPage> {
         children: <Widget>[
           CachedNetworkImage(
               // imageUrl: widget.carro.urlFoto ??
-              imageUrl:
-                  "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png"),
+              imageUrl: "https://telhafer.com.br/image/no_image.jpg"),
           _bloco1(),
           const Divider(),
           _bloco2(),

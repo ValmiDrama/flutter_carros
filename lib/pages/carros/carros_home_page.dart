@@ -100,9 +100,9 @@ class _CarrosHomePageState extends State<CarrosHomePage>
           TabBarView(
         controller: _tabController,
         children: [
-          CarrosListView(TipoCarro.classicos),
-          CarrosListView(TipoCarro.esportivos),
-          CarrosListView(TipoCarro.luxo),
+          CarrosListView(tipo: TipoCarro.classicos),
+          CarrosListView(tipo: TipoCarro.esportivos),
+          CarrosListView(tipo: TipoCarro.luxo),
           // FavoritosPage(),
         ],
       ),

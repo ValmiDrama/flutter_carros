@@ -1,49 +1,59 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, unnecessary_null_comparison
 // ignore_for_file: avoid_print
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_carros/pages/carros/carro_details_page.dart';
 
+import 'package:flutter_carros/pages/carros/carro_details_page.dart';
 import 'package:flutter_carros/pages/carros/carros_api.dart';
 import 'package:flutter_carros/pages/carros/carros_model.dart';
 import 'package:flutter_carros/utils/push.dart';
 
-class CarrosListView extends StatelessWidget {
+class CarrosListView extends StatefulWidget {
   String tipo;
-  CarrosListView(
-    String classicos, {
+
+  CarrosListView({
     Key? key,
-    this.tipo = TipoCarro.classicos,
+    required this.tipo,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return _body();
+  State<CarrosListView> createState() => _CarrosListViewState();
+}
+
+class _CarrosListViewState extends State<CarrosListView>
+    with AutomaticKeepAliveClientMixin<CarrosListView> {
+  late List<Carro> carros;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
   }
 
-  _body() {
+  _loadData() async {
+    List<Carro> carros = await CarrosApi.getCarros(widget.tipo);
+    setState(() {
+      this.carros = carros;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // Future<List<Carro>> future = CarrosApi.getCarros();
-    Future<List<Carro>> future = CarrosApi.getCarros(tipo);
+    // Future<List<Carro>> future = CarrosApi.getCarros(widget.tipo);
+    super.build(context);
 
-    return FutureBuilder(
-      future: future,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          print('Erro');
-          const Center(
-            child: Text("Error Data"),
-          );
-        }
-        // if (snapshot.hasData) {
-        //   print('Data');
-        //   return const Center(child: CircularProgressIndicator());
-        // }
+    if (carros == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
 
-        List<Carro> carros = snapshot.data ?? [];
-        return _listView(carros);
-      },
-    );
+    return _listView(carros);
   }
 
   Container _listView(List<Carro> carros) {
