@@ -1,4 +1,6 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable
+
+import 'package:flutter_carros/pages/login/user_model.dart';
 
 import 'carros_model.dart';
 import 'package:http/http.dart' as http;
@@ -13,13 +15,23 @@ class TipoCarro {
 class CarrosApi {
   static Future<List<Carro>> getCarros(String? tipo) async {
     // static Future<List<Carro>> getCarros() async {
+
+    Usuario? user = await Usuario.get();
+
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer ${user?.token}"
+    };
+
     var url =
-        'https://carros-springboot.herokuapp.com/api/v1/carros/tipo/$tipo';
+        'https://carros-springboot.herokuapp.com/api/v2/carros/tipo/$tipo';
+    // 'https://carros-springboot.herokuapp.com/api/v1/carros/tipo/$tipo';
     // 'https://carros-springboot.herokuapp.com/api/v1/carros';
 
     print("GET > $url");
 
-    var response = await http.get(Uri.parse(url));
+    var response = await http.get(Uri.parse(url), headers: headers);
+    // var response = await http.get(Uri.parse(url));
 
     String json = response.body;
 

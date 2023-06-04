@@ -3,9 +3,11 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_carros/pages/carros/carro_details_page.dart';
 
 import 'package:flutter_carros/pages/carros/carros_api.dart';
 import 'package:flutter_carros/pages/carros/carros_model.dart';
+import 'package:flutter_carros/utils/push.dart';
 
 class CarrosListView extends StatelessWidget {
   String tipo;
@@ -22,7 +24,7 @@ class CarrosListView extends StatelessWidget {
 
   _body() {
     // Future<List<Carro>> future = CarrosApi.getCarros();
-    Future<List<Carro>> future = CarrosApi.getCarros(TipoCarro.classicos);
+    Future<List<Carro>> future = CarrosApi.getCarros(tipo);
 
     return FutureBuilder(
       future: future,
@@ -103,6 +105,6 @@ class CarrosListView extends StatelessWidget {
   }
 
   _onClickCarro(context, Carro c) {
-    // push(context, CarroPage(c));
+    push(context, CarroDetailhesPage(c));
   }
 }
