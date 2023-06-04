@@ -1,7 +1,9 @@
-// ignore_for_file: unused_field, library_private_types_in_public_api
+// ignore_for_file: unused_field, library_private_types_in_public_api, use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_carros/pages/carros/carros_home_page.dart';
 import 'package:flutter_carros/pages/login/login_bloc.dart';
+import '../../utils/push.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text.dart';
 
@@ -75,8 +77,7 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context, snapshot) {
                 return AppButton(
                   "Login",
-                  // onPressed: _onClickLogin,
-                  onPressed: () {},
+                  onPressed: _onClickLogin,
                   // showProgress: snapshot.data,
                 );
               },
@@ -121,8 +122,13 @@ class _LoginPageState extends State<LoginPage> {
   //   }
   // }
 
+  Future<void> _onClickLogin() async {
+    // push(context, const HomePage(), replace: true);
+    push(context, const CarrosHomePage(), replace: true);
+  }
+
   // void _onClickLogin() async {
-  //   if (!_formKey.currentState.validate()) {
+  //   if (!_formKey.currentState!.validate()) {
   //     return;
   //   }
 
@@ -134,9 +140,9 @@ class _LoginPageState extends State<LoginPage> {
   //   ApiResponse response = await _bloc.login(login, senha);
 
   //   if (response.ok) {
-  //     push(context, HomePage(), replace: true);
+  //     push(context, const HomePage(), replace: true);
   //   } else {
-  //     alert(context, response.msg);
+  //     alert(context, response.msg.toString());
   //   }
   // }
 

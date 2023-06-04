@@ -1,11 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
 import 'package:flutter_carros/pages/login/user_model.dart';
-
 import '../../api_response.dart';
 
 class LoginApi {
@@ -17,11 +14,12 @@ class LoginApi {
 
       Map params = {"username": login, "password": senha};
 
-      String s = json.encode(params);
+      String body = json.encode(params);
       print(url);
-      print(">> $s");
+      print(">> $body");
 
-      var response = await http.post(Uri.parse(url), body: s, headers: headers);
+      var response =
+          await http.post(Uri.parse(url), body: body, headers: headers);
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');

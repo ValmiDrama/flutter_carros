@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_null_aware_operators
 
 import 'dart:convert' as convert;
-
 import '../../utils/prefs.dart';
 
 class Usuario {
