@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 // ignore_for_file: avoid_print
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,7 +9,8 @@ import 'package:flutter_carros/pages/carros/carros_model.dart';
 
 class CarrosListView extends StatelessWidget {
   String tipo;
-  CarrosListView({
+  CarrosListView(
+    String classicos, {
     Key? key,
     this.tipo = TipoCarro.classicos,
   }) : super(key: key);

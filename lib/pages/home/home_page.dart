@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_carros/pages/carros/carros_api.dart';
-import 'package:flutter_carros/pages/carros/carros_listview_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,9 +14,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: CarrosListView(
-        tipo: TipoCarro.classicos,
-      ),
+      // body: CarrosListView(TipoCarro.classicos),
     );
   }
 }

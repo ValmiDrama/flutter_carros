@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carros/pages/carros/carros_home_page.dart';
 import 'package:flutter_carros/pages/login/login_bloc.dart';
+import 'package:flutter_carros/pages/login/user_model.dart';
 import '../../utils/push.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_text.dart';
@@ -29,6 +30,14 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
+    Future<Usuario?> future = Usuario.get();
+    future.then((Usuario? user) {
+      if (user != null) {
+        setState(() {
+          _tLogin.text = user.login ?? '';
+        });
+      }
+    });
     // initFcm();
   }
 
