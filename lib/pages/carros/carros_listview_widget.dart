@@ -1,5 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, unnecessary_null_comparison
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, unnecessary_null_comparison, unused_field
 // ignore_for_file: avoid_print
+
+import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,8 @@ class _CarrosListViewState extends State<CarrosListView>
     with AutomaticKeepAliveClientMixin<CarrosListView> {
   late List<Carro> carros;
 
+  final _streamController = StreamController<List<Carro>>();
+
   @override
   bool get wantKeepAlive => true;
 
@@ -36,24 +40,32 @@ class _CarrosListViewState extends State<CarrosListView>
 
   _loadData() async {
     List<Carro> carros = await CarrosApi.getCarros(widget.tipo);
-    setState(() {
-      this.carros = carros;
-    });
+
+    _streamController.add(carros);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Future<List<Carro>> future = CarrosApi.getCarros();
-    // Future<List<Carro>> future = CarrosApi.getCarros(widget.tipo);
     super.build(context);
 
-    if (carros == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+    return StreamBuilder(
+        stream: _streamController.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error Data'),
+            );
+          }
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-    return _listView(carros);
+          List<Carro>? carros = snapshot.data;
+
+          return _listView(carros!);
+        });
   }
 
   Container _listView(List<Carro> carros) {
@@ -62,7 +74,7 @@ class _CarrosListViewState extends State<CarrosListView>
       child: ListView.builder(
         itemCount: carros.length,
         itemBuilder: (context, index) {
-          Carro c = carros[index];
+          Carro carrosLista = carros[index];
 
           return Card(
             color: Colors.grey[100],
@@ -73,13 +85,13 @@ class _CarrosListViewState extends State<CarrosListView>
                 children: <Widget>[
                   Center(
                     child: CachedNetworkImage(
-                      imageUrl: c.urlFoto ??
+                      imageUrl: carrosLista.urlFoto ??
                           "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png",
                       width: 250,
                     ),
                   ),
                   Text(
-                    c.nome ?? '',
+                    carrosLista.nome ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 25),
@@ -94,7 +106,7 @@ class _CarrosListViewState extends State<CarrosListView>
                       children: <Widget>[
                         ElevatedButton(
                           child: const Text('DETALHES'),
-                          onPressed: () => _onClickCarro(context, c),
+                          onPressed: () => _onClickCarro(context, carrosLista),
                         ),
                         ElevatedButton(
                           child: const Text('SHARE'),
@@ -114,7 +126,7 @@ class _CarrosListViewState extends State<CarrosListView>
     );
   }
 
-  _onClickCarro(context, Carro c) {
-    push(context, CarroDetailhesPage(c));
+  _onClickCarro(context, Carro carro) {
+    push(context, CarroDetailhesPage(carro));
   }
 }

@@ -39,7 +39,7 @@ class _CarroDetailhesPageState extends State<CarroDetailhesPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text('widget.carro.nome'),
+        title: Text(widget.carro.nome ?? ''),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.place),
@@ -80,8 +80,8 @@ class _CarroDetailhesPageState extends State<CarroDetailhesPage> {
       child: ListView(
         children: <Widget>[
           CachedNetworkImage(
-              // imageUrl: widget.carro.urlFoto ??
-              imageUrl: "https://telhafer.com.br/image/no_image.jpg"),
+              imageUrl: widget.carro.urlFoto ??
+                  "https://telhafer.com.br/image/no_image.jpg"),
           _bloco1(),
           const Divider(),
           _bloco2(),
